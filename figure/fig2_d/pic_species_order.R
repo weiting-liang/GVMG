@@ -11,7 +11,7 @@ library(tidyr)
 
 #data
 order_data <- read.csv('order_mags.txt', header=FALSE)
-species_data <- read.csv('species_count.csv')
+species_data <- read.csv('species_count2.csv')
 
 #order_data
 order_df1 <- as.data.frame(table(order_data))
