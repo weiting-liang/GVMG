@@ -1,0 +1,3 @@
+dRep dereplicate drep_output -g sample1/*.fa -pa 0.9 -sa 0.99 -nc 0.3 --S_algorithm fastANI --genomeInfo eukcc_information.csv --completeness 50 --contamination 10
+dRep dereplicate drep_output -g sample2/*.fa -pa 0.9 -sa 0.99 -nc 0.3 --S_algorithm fastANI --genomeInfo eukcc_information.csv --completeness 50 --contamination 10
+#...
