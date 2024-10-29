@@ -1,4 +1,3 @@
-###liangweiting
 ###stacked hist phylum SGB
 #R 4.2.3
 workdir <- dirname(rstudioapi::getActiveDocumentContext()$path)
