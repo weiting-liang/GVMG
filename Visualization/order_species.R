@@ -1,4 +1,3 @@
-###liangweiting
 ###pic order and species proportion
 ###R 4.2.3
 workdir <- dirname(rstudioapi::getActiveDocumentContext()$path)
