@@ -1,5 +1,4 @@
 ###R 4.0.5 
-###liangweiting
 workdir <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(workdir)
 rm(list = ls())
