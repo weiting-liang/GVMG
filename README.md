@@ -8,5 +8,5 @@ We developed an extensive catalog of vaginal microbial genomes (VMG) by integrat
 
 #workflow
 
-
+#citation
 
