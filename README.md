@@ -6,7 +6,7 @@ https://www.researchgate.net/publication/379595215_Genomic_landscape_in_the_huma
 
 **Data Availability**  
 Raw microbial metagenome data can be accessed through CNP0005953.  
-Vaginal microbial genome database is stored at https://zenodo.org/uploads/14708991  :
+Vaginal microbial genome database is stored at https://zenodo.org/uploads/14708991  :  
 1.kraken2 database: krakendb_202408.tar.gz
 2.prokaryotic SGB genomes: proSGB_890.tar.gz
 3.prokaryotic genomes: Pro_genomes36059.tar.gz
