@@ -5,7 +5,7 @@ Here we established an extensive catalog of global vaginal microbial genomes (GV
 https://www.researchgate.net/publication/379595215_Genomic_landscape_in_the_human_vaginal_microbiome_links_to_host_geographics_and_genetics (under reviewer)
 
 **Data Availability**  
-Raw microbial metagenome data can be accessed through CNP0005953.  
+The metagenomic data in Peacock Dataset are available in the CNGB Nucleotide Sequence Archive (CNSA: https://db.cngb.org/cnsa) under accession number CNP0005953 and CNP0006125.
 Vaginal microbial genome database is stored at 10.5281/zenodo.14708991  :  
 1.kraken2 database: krakendb_202408.tar.gz  
 2.prokaryotic SGB genomes: proSGB_890.tar.gz  
