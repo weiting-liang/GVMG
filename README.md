@@ -35,7 +35,7 @@ CHM13v2.0
 ```
 The detailed data quality control and assembly binning steps are listed in the article method. The specific operational steps are outlined below.   
 Prepare a list of fastq files(.rmhost.1.fq.gz) that have been quality controlled and removed from the host sequence and store it in the samples_rmhost1.txt file.   
-Step1: Get batch-run assembly command scripts and run
+**Step1: Get batch-run assembly command scripts and run**
 ```
 sh ./Assembly_Binning/get_pe_metaspades.sh #output assembly_pe.sh
 sh assembly_pe.sh
@@ -46,7 +46,7 @@ sh ./Assembly_Binning/get_se_megahit.sh #output assembly_se.sh
 sh assembly_se.sh
 ```
 
-Step2: Prepare the nearest 20 samples for multi-sample binning
+**Step2: Prepare the nearest 20 samples for multi-sample binning**
 ```
 ls ./output/assembly/*.scaffolds.fa.gz > scaffolds.fa.gz.list
 sh ./Assembly_Binning/get_mash_distance_work.sh  #1000 samples took 20 minutes
@@ -59,7 +59,7 @@ sh ./Assembly_Binning/get_mash_distance_work_se.sh
 Rscript ./Assembly_Binning/get_mash_colest20.R
 ```
 
-Step3: Multiple sample binning
+**Step3: Multiple sample binning**
 ```
 sh ./Assembly_Binning/get_mulbin_Metabat2_pe.sh #output bin_Metabat2_pe.sh
 sh bin_Metabat2_pe.sh
@@ -68,7 +68,7 @@ sh ./Assembly_Binning/get_mulbin_Metabat2_se.sh #output bin_Metabat2_se.sh
 sh bin_Metabat2_se.sh
 ```
 
-Step4: De-redundancy within the sample
+**Step4: De-redundancy within the sample**
 ```
 dRep dereplicate $sampleid_drep -p 8 -pa 0.9 -sa 0.99 -nc 0.3 --S_algorithm fastANI -comp 50 -con 5 -g $sampleid_binning/*.fa
 ```
@@ -92,12 +92,12 @@ Galah v0.4.0
 GTDB-Tk v2.4.0 (with GTDB database release 220)
 ```
 
-Step1: All prokaryotic genome paths (Pro_mags_genomes.all.path.list) and their evaluation results of checkm2 (checkm2_report.txt), as input files, run the following script and cluster to obtain the species representative genome(SGB)
+**Step1: All prokaryotic genome paths (Pro_mags_genomes.all.path.list) and their evaluation results of checkm2 (checkm2_report.txt), as input files, run the following script and cluster to obtain the species representative genome(SGB)**
 ```
 sh ./Genome_Annotation/galah.sh
 ```
 
-Step2: Species classification annotation and phylogenetic tree construction for SGB
+**Step2: Species classification annotation and phylogenetic tree construction for SGB**
 ```
 sh ./Genome_Annotation/gtdbtk.sh
 ```
@@ -134,23 +134,23 @@ BLAST v2.11.0 (with NCBI/blast_nt database)
 fastANI v1.34
 ```
 
-Step1: Screened out of all MAGs obtained by assembly with greater than 3MB and Remove non-eukaryotic contigs in these MAGs, and only MAGs that are still larger than 3MB are retained.
+**Step1: Screened out of all MAGs obtained by assembly with greater than 3MB and Remove non-eukaryotic contigs in these MAGs, and only MAGs that are still larger than 3MB are retained.**
 ```
 sh ./Fungal_excavation/eukrep.sh
 ```
 
-Step2: Fungal MAGs quality assessment
+**Step2: Fungal MAGs quality assessment**
 ```
 mv *.euk.fa euk_fa
 sh ./Fungal_excavation/eukcc.sh
 ```
 
-Step3: De-redundancy within the sample
+**Step3: De-redundancy within the sample**
 ```
 sh ./Fungal_excavation/drep_withinSample.sh
 ```
 
-Step4: Select MAGs after quality filtering and redundancy. Taxo Annotation and analysis.
+**Step4: Select MAGs after quality filtering and redundancy. Taxo Annotation and analysis.**
 ```
 sh ./Fungal_excavation/get_blastn.sh
 sh ./Fungal_excavation/get_annotate_work.sh #output work.sh
