@@ -1,5 +1,5 @@
 #galah 0.4.0
-/hwfssz1/ST_HEALTH/P18Z10200N0127/juyanmei/bin/miniconda3/bin/galah cluster \
+galah cluster \
   --genome-fasta-list Pro_mags_genomes.all.path.list \
   --checkm2-quality-report checkm2_report.txt \
   --genome-fasta-extension fa \
