@@ -34,7 +34,7 @@ GRCh38
 CHM13v2.0
 ```
 The detailed data quality control and assembly binning steps are listed in the article method. The specific operational steps are outlined below.   
-Prepare a list of fastq files(.rmhost.1.fq.gz) that have been quality controlled and removed from the host sequence and store it in the samples_rmhost1.txt file.
+Prepare a list of fastq files(.rmhost.1.fq.gz) that have been quality controlled and removed from the host sequence and store it in the samples_rmhost1.txt file.   
 Step1: Get batch-run assembly command scripts and run
 ```
 sh ./Assembly_Binning/get_pe_metaspades.sh #output assembly_pe.sh
@@ -82,7 +82,7 @@ GUNC v1.06
 INFERNAL v1.1.5 (using cmsearch)
 tRNAscan-SE v2.0.12
 ```
-prepared all the genomic path that need to be evaluated for quality, as well as the required database (GUNC, rRNA), and used DCS Cloud for calculations. 
+prepared all the genomic path that need to be evaluated for quality, as well as the required database (GUNC, rRNA), and used DCS Cloud for calculations.    
 For the detailed wdl process, see ./Genomic_quality_assessment/checkm_gunc.wdl, ./Genomic_quality_assessment/infernal_rRNA.wdl, ./Genomic_quality_assessment/tRNAscan.wdl, involving the use of docker environment has been disclosed on the DCS Cloud platform.
 
 ## Prokaryotic gene clustering and species annotation
@@ -120,7 +120,7 @@ antiSMASH v7.1.0
 BiG-MAP v1.0.0
 ```
 
-prepared all the genomic path that need to be evaluated for quality, as well as the required database and used DCS Cloud for calculations. 
+prepared all the genomic path that need to be evaluated for quality, as well as the required database and used DCS Cloud for calculations.    
 For the detailed wdl process, see ./Genomic_Annotation/*.wdl, involving the use of docker environment has been disclosed on the DCS Cloud platform.
 
 ## Fungal MAGs
