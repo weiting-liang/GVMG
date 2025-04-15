@@ -18,7 +18,7 @@ https://www.researchgate.net/publication/379595215_Genomic_landscape_in_the_huma
 
 The detailed steps and software used in the article method, including: assembly and binning, genome quality assessment, SGB clustering and annotation, function annotation, fungal mining, virus assembly mining analysis, kraken2 database construction, species abundance analysis, phenotypic code, SNP analysis, GWAS analysis. We would like to thank DCS Cloud (https://cloud.stomics.tech) for providing the computational resources and software support necessary for this study.
 
-##Genome assembly and binning
+## Genome assembly and binning
 Required
 ```
 fastp v0.20.1
@@ -73,7 +73,7 @@ Step4: De-redundancy within the sample
 dRep dereplicate $sampleid_drep -p 8 -pa 0.9 -sa 0.99 -nc 0.3 --S_algorithm fastANI -comp 50 -con 5 -g $sampleid_binning/*.fa
 ```
 
-##Genome quality assessment
+## Genome quality assessment
 
 Required
 ```
@@ -85,7 +85,7 @@ tRNAscan-SE v2.0.12
 prepared all the genomic path that need to be evaluated for quality, as well as the required database (GUNC, rRNA), and used DCS Cloud for calculations. 
 For the detailed wdl process, see ./Genomic_quality_assessment/checkm_gunc.wdl, ./Genomic_quality_assessment/infernal_rRNA.wdl, ./Genomic_quality_assessment/tRNAscan.wdl, involving the use of docker environment has been disclosed on the DCS Cloud platform.
 
-##Prokaryotic gene clustering and species annotation
+## Prokaryotic gene clustering and species annotation
 Required
 ```
 Galah v0.4.0
@@ -102,7 +102,7 @@ Step2: Species classification annotation and phylogenetic tree construction for 
 sh ./Genome_Annotation/gtdbtk.sh
 ```
 
-##Functional analysis of prokaryotic genomes
+## Functional analysis of prokaryotic genomes
 
 Required
 ```
@@ -123,7 +123,7 @@ BiG-MAP v1.0.0
 prepared all the genomic path that need to be evaluated for quality, as well as the required database and used DCS Cloud for calculations. 
 For the detailed wdl process, see ./Genomic_Annotation/*.wdl, involving the use of docker environment has been disclosed on the DCS Cloud platform.
 
-##Fungal MAGs
+## Fungal MAGs
 
 Required
 ```
