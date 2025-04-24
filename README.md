@@ -156,3 +156,5 @@ sh ./Fungal_excavation/get_blastn.sh
 sh ./Fungal_excavation/get_annotate_work.sh #output work.sh
 sh work.sh #need ./Fungal_excavation/getlength.pl and ./Fungal_excavation/mlg.tax.perl
 ```
+## Analysis of the genome for viral populations
+Viral population genomes were analyzed using the methodology outlined in the 'Viral genome identification' section of the VMGC pipeline (https://github.com/RChGO/VMGC)
