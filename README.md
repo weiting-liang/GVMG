@@ -169,10 +169,10 @@ Bracken v2.7
 ```
 
 **Step1: Data Preparation: 1) prokaryotic and fungi genomes. 2) the human reference genome (CHM13V2.0) and phage phiX174. 3) Genome of Trichomonas vaginalis (Genome assembly ASM282v1).** 
-Organize the aforementioned data into two input files based on their taxonomic classification information:
-1.sgb_out_taxa.txt 
+Organize the aforementioned data into two input files based on their taxonomic classification information:  
+1.sgb_out_taxa.txt   
  ![Alternative Text](p1.png)  
-2.mags_otu_taxa.txt 
+2.mags_otu_taxa.txt   
  ![Alternative Text](p2.png)  
 
 **Step2: Copy all genome data to the 'mags' directory.**
@@ -224,6 +224,8 @@ sh ./Species_abundance_profiling/Bracken.sh
 **Step8: inspect output**
 ```
 kraken2-inspect --db ./ > inspect.out 2>&1
+python ./Species_abundance_profiling/calc_genome_size.py  ./
+mv species_genome_size.txt Library/
 ```
 
 
