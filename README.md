@@ -282,7 +282,7 @@ python merge_sylph_taxprof.py -o merged_mnk20_relab.txt --column relative_abunda
 sed  -n '/s__/p;/name/p' merged_mnk20_relab.txt' > vOTU_relab_v2025.txt
 ```
 
-##Analytical scripts based on the profile data for researchers
+## Analytical scripts based on the profile data for researchers
 1.	Association between vOTUs in population and phenotypes (Generalized Linear Model):   
 ./Species_abundance_profiling/Associa_vOTU.R
 2.	Constructed a co-occurrence matrix using the SparCC method:   
