@@ -228,4 +228,68 @@ python ./Species_abundance_profiling/calc_genome_size.py  ./
 mv species_genome_size.txt Library/
 ```
 
+## vOTU profile
+Required
+```
+sylph(https://github.com/bluenote-1577/sylph)
+```
+
+**Step1: Pre-built databases** 
+Creating a database of contigs or if genomes are all in one fasta file.
+From https://github.com/bluenote-1577/sylph/wiki/sylph-cookbook#creating-a-database-of-fasta-files
+```
+seqkit grep -f ID.5mags.txt  vOTU.fa  -o virus.5mags.fa
+
+sylph sketch -c 100 virus.5mags.fa -i -o virus_db_2025
+```
+**Step2: Sample sketching** 
+```
+grep -v  "rmhost.fq.gz" sample.chm13.13677.lst> sample.chm13.11986.lst
+ 
+# Sketching paired-end reads
+while read line; do samp=(${line,"\t"});fq1=${samp[1]};fq2=${samp[2]};echo "sylph sketch -c 100 -1 $fq1 -2 $fq2 -d output -t 50" >> work.sh;done < sample.chm13.11986.lst  
+ 
+# Sketching single-end reads
+while read line; do samp=(${line,"\t"});fq1=${samp[1]};echo "sylph sketch -c 100  -r $fq1  -d  output.single -t 50" >> work.singleread.sh; done <sample.chm13.single.lst
+ 
+sylph sketch -c 100  -r
+```
+
+**Step3: Mapping**
+```
+cp output.single/* output
+sylph profile virus_db_2024.syldb output/*.sylsp   --min-number-kmers 20 -o result.virus.mnk20.tsv &
+sed -i  's/\/hwf.*rmhost\///g;s/.rmhost.*fq.gz//g' result.virus.mnk20.tsv
+```
+
+**Step4: Annotating**
+Prepare the annotation file for viral taxonomic units: virus.taxa.txt
+ ![Alternative Text](p3.png) 
+Modify the annotation results and generate a consolidated profile
+```
+cp ./Species_abundance_profiling/sylph_to_taxprof.py ./Species_abundance_profiling/merge_sylph_taxprof.py ./
+
+cd profile_mnk20; python ../sylph_to_taxprof.py -s ../result.virus.mnk20.tsv -m ../virus.taxa.txt
+```
+
+**Step5: Merge profiles**
+```
+python merge_sylph_taxprof.py -o merged_mnk20_relab.txt --column relative_abundance profile_mnk20/*
+```
+
+**Step6: Extract vOTUs**
+```
+sed  -n '/s__/p;/name/p' merged_mnk20_relab.txt' > vOTU_relab_v2025.txt
+```
+
+##Analytical scripts based on the profile data for researchers
+1.	Association between vOTUs in population and phenotypes (Generalized Linear Model):   
+./Species_abundance_profiling/Associa_vOTU.R
+2.	Constructed a co-occurrence matrix using the SparCC method:   
+./Species_abundance_profiling/sparcc.sh
+3.	Bacterial vaginosis specific signatures in bacterial SGBs:   
+./Species_abundance_profiling/ANCOM.R
+4.	Analysis of CST, PAM cluster:  
+./Species_abundance_profiling/CST_analysis_PAM_cluster.R
+
 
