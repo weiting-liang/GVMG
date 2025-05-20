@@ -269,6 +269,7 @@ Modify the annotation results and generate a consolidated profile
 ```
 cp ./Species_abundance_profiling/sylph_to_taxprof.py ./Species_abundance_profiling/merge_sylph_taxprof.py ./
 
+mkdir -p profile_mnk20
 cd profile_mnk20; python ../sylph_to_taxprof.py -s ../result.virus.mnk20.tsv -m ../virus.taxa.txt
 ```
 
