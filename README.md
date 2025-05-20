@@ -168,24 +168,24 @@ Phanta v1.1.0
 Bracken v2.7
 ```
 
-Step1: Data Preparation: 1) prokaryotic and fungi genomes. 2) the human reference genome (CHM13V2.0) and phage phiX174. 3) Genome of Trichomonas vaginalis (Genome assembly ASM282v1). 
+**Step1: Data Preparation: 1) prokaryotic and fungi genomes. 2) the human reference genome (CHM13V2.0) and phage phiX174. 3) Genome of Trichomonas vaginalis (Genome assembly ASM282v1).** 
 Organize the aforementioned data into two input files based on their taxonomic classification information:
-1.sgb_out_taxa.txt
- 
-2.mags_otu_taxa.txt
- 
+1.sgb_out_taxa.txt 
+ ![Alternative Text](p1.png)  
+2.mags_otu_taxa.txt 
+ ![Alternative Text](p2.png)  
 
-Step2: Copy all genome data to the 'mags' directory.
+**Step2: Copy all genome data to the 'mags' directory.**
 ```
 for i in `cat path.genome.id`;do cp  data/work/rawdata/$i mags/;done
 ```
 
-Step3: Build SGB nodes.
+**Step3: Build SGB nodes.**
 ```
 mkdir  library_sgb;python ./Species_abundance_profiling/tax_gtdb_final.py --gtdb sgb_otu_taxa.txt --assemblies ./mags/ --nodes nodes.dmp --names names.dmp --kraken_dir library_sgb  1> library.o 2> library.e
 ```
 
-Step4: Retrieve node information. Establish MAGs-to-nodes associations.
+**Step4: Retrieve node information. Establish MAGs-to-nodes associations.**
 ```
 grep species nodes.dmp |cut -f1,23 > nodes.species.txt
 awk ' NR==FNR { nodes[$2] = (nodes[$2] ? nodes[$2] "," $1 : $1); next  }  {  magid = $1;  species = $2;       matched_nodes = (species in nodes) ? nodes[species] : "NA";  print magid "\t" matched_nodes; } ' nodes.species.txt mags_otu_taxa.txt > mags_krakentaxid.match.txt
@@ -198,7 +198,7 @@ mkdir library_mags; rm -rf headerChange.sh;while read line;do  all=(${line});mag
 sh get_MAGheaderChange_v2.sh
 ```
 
-Step5: Build a reference database using the modified MAGs containing Kraken annotation information.
+**Step5: Build a reference database using the modified MAGs containing Kraken annotation information.**
 ```
 mkdir database
 rm -rf add_to_library.sh; for file in library_mags/*.fa;do   echo "kraken2-build --add-to-library $file --db database" >> add_to_library.sh ; done
@@ -211,17 +211,17 @@ mv nodes.dmp database/taxonomy
 ```
 NB!!: please check these two files rwxr-xr-x!! (chmod +x *dmp)
 
-Step6: Database Construction.
+**Step6: Database Construction.**
 ```
 kraken2-build --build --db database --threads 4
 ```
 
-Step7: Let's continue to generate bracken distribution for profile correction
+**Step7: Let's continue to generate bracken distribution for profile correction**
 ```
 cd database
 sh ./Species_abundance_profiling/Bracken.sh
 ```
-Step8: inspect output
+**Step8: inspect output**
 ```
 kraken2-inspect --db ./ > inspect.out 2>&1
 ```
