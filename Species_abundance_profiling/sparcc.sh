@@ -1,0 +1,4 @@
+#haolilan
+#https://github.com/GRONINGEN-MICROBIOME-CENTRE/DMP/blob/main/core_keystone_microbes/dmp_keystone_microbiome_calculation.sh
+
+while read line; do OUTPUT_PATH=`basename $line .txt`;INPUT_PATH=$line;echo -e "cd /data/work/sparcc; mkdir -p $OUTPUT_PATH/Resamplings $OUTPUT_PATH/Bootstraps && cd $OUTPUT_PATH && python /data/work/sparcc/script/SparCC.py $INPUT_PATH --cor_file=cor_sparcc.out.txt --cov_file=cov_mat_SparCC.out.txt && python /data/work/sparcc/script/MakeBootstraps.py $INPUT_PATH -n 1000 -t permutation_#.txt -p Resamplings/ && for i in {0..999};do echo "python /data/work/sparcc/script/SparCC.py Resamplings/permutation_\$i.txt --cor_file=Bootstraps/sim_cor_\$i.txt" >> resample.sh; done && nohup parallel -j 10 < resample.sh && python /data/work/sparcc/script/PseudoPvals.py cor_sparcc.out.txt Bootstraps/sim_cor_#.txt 1000 -o pvals_two_sided.txt -t two_sided" >>work.1000.sh; done<group.lst 
