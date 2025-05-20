@@ -264,7 +264,7 @@ sed -i  's/\/hwf.*rmhost\///g;s/.rmhost.*fq.gz//g' result.virus.mnk20.tsv
 
 **Step4: Annotating**
 Prepare the annotation file for viral taxonomic units: virus.taxa.txt
- ![Alternative Text](p3.png) 
+ ![Alternative Text](p3.png)    
 Modify the annotation results and generate a consolidated profile
 ```
 cp ./Species_abundance_profiling/sylph_to_taxprof.py ./Species_abundance_profiling/merge_sylph_taxprof.py ./
