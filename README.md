@@ -293,7 +293,7 @@ sed  -n '/s__/p;/name/p' merged_mnk20_relab.txt' > vOTU_relab_v2025.txt
 4.	Analysis of CST, PAM cluster:  
 ./Species_abundance_profiling/CST_analysis_PAM_cluster.R
 
-## pan- and core-genome analysis (SNP analysis)
+## Pan- and Core-genome analysis (SNP analysis)
 Required
 ```
 Prokka v1.14.6
