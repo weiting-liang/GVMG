@@ -360,7 +360,7 @@ sig_snps <- subset(snp_assoc, P <= 0.05 / nrow(snp_assoc))
 
 **Step11: Map Significant SNPs to Core Genes**
 ```
-waiting...
+  
 ```
 
 ## Extracting Host WGS Data from Vaginal Metagenomic Samples
