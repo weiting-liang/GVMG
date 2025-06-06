@@ -349,77 +349,10 @@ plink --vcf core_snps.vcf --make-bed --out plink_data
 plink --bfile plink_data --assoc --out snp_assoc
 ```
 
-**Step10: Identify Significant SNPs with Bonferroni Correction**
-```
-#bash:
-threshold=$(echo "0.05 / $(wc -l < core_snps.vcf)" | bc -l)
-#R:
-snp_assoc <- read.table("snp_assoc.assoc", header = TRUE)
-sig_snps <- subset(snp_assoc, P <= 0.05 / nrow(snp_assoc))
-```
-
-**Step11: Map Significant SNPs to Core Genes**
-```
-  
-```
-
-## Extracting Host WGS Data from Vaginal Metagenomic Samples
-Required
-```
-BWA v0.7.17
-Picard v2.26.10
-GATK v4.2.6.1
-VCFtools v0.1.16
-PLINK v1.9
-BEAGLE v5.1
-```
-
-**Step1: Alignment and Variant Calling**
-```
-#Align sequencing reads to GRCh38/hg38 using BWA.
-bwa mem -t 16 GRCh38.fa sample_R1.fastq.gz sample_R2.fastq.gz > sample.sam
-
-#Convert SAM to BAM, sort and mark duplicates with Picard.
-picard SortSam INPUT=sample.sam OUTPUT=sample_sorted.bam SORT_ORDER=coordinate
-picard MarkDuplicates INPUT=sample_sorted.bam OUTPUT=sample_dedup.bam METRICS_FILE=metrics.txt
-
-#Use GATK HaplotypeCaller to generate GVCF for each sample.
-gatk HaplotypeCaller -R GRCh38.fa -I sample_dedup.bam -O sample.g.vcf.gz -ERC GVCF
-
-#Joint calling with CombineGVCFs and GenotypeGVCFs.
-gatk CombineGVCFs -R GRCh38.fa -V sample1.g.vcf.gz -V sample2.g.vcf.gz -O cohort.g.vcf.gz
-gatk GenotypeGVCFs -R GRCh38.fa -V cohort.g.vcf.gz -O cohort_raw.vcf.gz
-```
-
-**Step2: Variant Recalibration and Filtering**
-```
-#Variant quality score recalibration (VQSR) with GATK. 
-gatk VariantRecalibrator \
-    -R GRCh38.fa -V cohort_raw.vcf.gz \
-    --resource:hapmap,known=false,training=true,truth=true,prior=15.0 hapmap.vcf \
-    --resource:omni,known=false,training=true,truth=true,prior=12.0 omni.vcf \
-    --resource:1000G,known=false,training=true,truth=false,prior=10.0 1000G.vcf \
-    --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 dbsnp.vcf \
-    -mode SNP -O output.snp.recal --tranches-file output.snp.tranches --rscript-file output.snp.plots.R  
-
-#Apply recalibration to select high-quality variants. 
-gatk ApplyVQSR -R GRCh38.fa -V cohort_raw.vcf.gz \
-    -O cohort_filtered.vcf.gz \
-    --truth-sensitivity-filter-level 99.5 \
-    --tranches-file output.snp.tranches \
-    --recal-file output.snp.recal \
-    -mode SNP
-
-#Filter variants with criteria: depth > 3×, HWE P > 10⁻⁵, call rate > 98%. 
-vcftools --gzvcf cohort_filtered.vcf.gz --minDP 3 --hwe 1e-5 --max-missing 0.98 --recode --recode-INFO-all --out cohort_final
-
-#Remove related individuals using PLINK (IBD Pi-hat < 0.1875).
-plink --vcf cohort_final.recode.vcf --make-bed --out cohort 
-plink --bfile cohort --genome --min 0.1875 --out relatedness
-```
 
 ## Association Analysis with Host Variants
 ```
+#PLINK v1.9
 sh ./GWAS/demo.sh
 ```
 
