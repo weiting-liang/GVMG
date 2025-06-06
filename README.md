@@ -293,4 +293,76 @@ sed  -n '/s__/p;/name/p' merged_mnk20_relab.txt' > vOTU_relab_v2025.txt
 4.	Analysis of CST, PAM cluster:  
 ./Species_abundance_profiling/CST_analysis_PAM_cluster.R
 
+## pan- and core-genome analysis (SNP analysis)
+Required
+```
+Prokka v1.14.6
+Roary v3.13.0
+SNP-sites v2.5.1
+PLINK v1.9
+```
+
+**Step1: Genome Annotation with Prokka**
+```
+#example for each genome(.fasta)
+prokka --outdir prokka_out --prefix sampleID --cpus 8 sampleID.fasta
+```
+
+**Step2: Pan- and Core-Genome Analysis with Roary**
+```
+cd SGB_dir
+roary -i 90 -cd 80 -e -n -p 8 -z -g 10000000 *.gff
+```
+
+**Step3: Phylogenetic Tree Construction with FastTree**
+```
+FastTree -nt -gtr roary_output/core_gene_alignment.aln > core_gene_tree.nwk
+```
+
+**Step4: Calculate Pairwise Patristic Distances (R)**
+```
+library(ape)
+tree <- read.tree("core_gene_tree.nwk")
+dist_matrix <- cophenetic.phylo(tree)
+```
+
+**Step5: PERMANOVA Test on Population Structure**
+```
+#ref:
+Rscript ./SNP/permanova_populationDif.R
+```
+
+**Step6: Non-Metric Multidimensional Scaling (NMDS)**
+```
+#ref:
+Rscript ./SNP/SNP_NMDS.R
+```
+
+**Step8: SNP Calling with SNP-sites**
+```
+snp-sites -o core_snps.vcf roary_output/core_gene_alignment.aln
+```
+
+**Step9: SNP-Population Association with PLINK**
+```
+plink --vcf core_snps.vcf --make-bed --out plink_data
+plink --bfile plink_data --assoc --out snp_assoc
+```
+
+**Step10: Identify Significant SNPs with Bonferroni Correction**
+```
+#bash:
+threshold=$(echo "0.05 / $(wc -l < core_snps.vcf)" | bc -l)
+#R:
+snp_assoc <- read.table("snp_assoc.assoc", header = TRUE)
+sig_snps <- subset(snp_assoc, P <= 0.05 / nrow(snp_assoc))
+```
+
+**Step11: Map Significant SNPs to Core Genes**
+```
+waiting...
+```
+
+
+
 
