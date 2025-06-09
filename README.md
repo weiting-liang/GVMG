@@ -304,14 +304,14 @@ PLINK v1.9
 
 **Step1: Genome Annotation with Prokka**
 ```
-#example for each genome(.fasta)
-prokka --outdir prokka_out --prefix sampleID --cpus 8 sampleID.fasta
+#example for each genome(.fa)
+prokka ~{fa_dir}/~{mag_name}\.fa --kingdom Bacteria --outdir out_~{mag_name} --locustag ~{mag_name} --force --cpus 4 --prefix ~{mag_name}
 ```
 
 **Step2: Pan- and Core-Genome Analysis with Roary**
 ```
 cd SGB_dir
-roary -i 90 -cd 80 -e -n -p 8 -z -g 10000000 *.gff
+roary: roary -i 90 -cd 80 -e -n -r -p 8 -z -g 10000000 ./*gff -f out
 ```
 
 **Step3: Phylogenetic Tree Construction with FastTree**
@@ -322,8 +322,12 @@ FastTree -nt -gtr roary_output/core_gene_alignment.aln > core_gene_tree.nwk
 **Step4: Calculate Pairwise Patristic Distances (R)**
 ```
 library(ape)
-tree <- read.tree("core_gene_tree.nwk")
-dist_matrix <- cophenetic.phylo(tree)
+args=commandArgs(T)
+tree<-read.tree("./unrooted.tree")
+PatristicDistMatrix1<-cophenetic.phylo(tree)
+PatristicDistMatrix1<-as.matrix(PatristicDistMatrix1)
+out<-paste(args[1],"PatristicDistMatrix.txt",sep="_")
+write.table(PatristicDistMatrix1,out,row.names=T,col.names=NA,quote=F,sep="\t")
 ```
 
 **Step5: PERMANOVA Test on Population Structure**
