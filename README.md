@@ -1,7 +1,7 @@
 # Analysis of Global Vaginal Microbial Genomes(GVMG)
 Here we established an extensive catalog of global vaginal microbial genomes (GVMG) by integrating 10,665 in-house Chinese metagenomes with 2,967 publicly available metagenomes and 1,433 bacterial isolates. This catalog includes 890 prokaryotic species (36,059 genomes), 11 fungal species (43 genomes) and 6,577 species-level viral operational taxonomic units (vOTUs) (28,953 genomes). 
 
-# See our paper for details:
+**See our paper for details:**
 Jie, Z., Liang, W., Ding, Q. et al. Genomic landscape of the human vaginal microbiome is linked to host genetics and population of origin. Nat Genet (2026). https://doi.org/10.1038/s41588-026-02639-2
   
 **Data Availability**  
